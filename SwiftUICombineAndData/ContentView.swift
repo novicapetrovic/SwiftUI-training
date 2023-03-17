@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @State private var contentOffset: CGFloat = 0
+    @State private var showCertificates: Bool = false
+    
     var body: some View {
         NavigationView {
             ZStack(alignment: .top) {
@@ -34,6 +36,21 @@ struct ContentView: View {
     
     var content: some View {
         VStack {
+            ProfileRow()
+                .onTapGesture {
+                    showCertificates.toggle()
+                }
+            
+            VStack {
+                NotificationsRow()
+                
+                divider
+                
+                LiteModeRow()
+            }
+            .blurBackground()
+            .padding(.top, 20)
+            
             VStack {
                 NavigationLink(destination: FAQView()) {
                     MenuRow()
@@ -51,11 +68,7 @@ struct ContentView: View {
                     MenuRow(title: "YouTube Channel", leftIcon: "play.rectangle.fill", rightIcon: "link")
                 })
             }
-            .padding(16)
-            .background(Color("Background 1"))
-            .background(VisualEffectBlur(blurStyle: .systemUltraThinMaterialDark))
-            .overlay(RoundedRectangle(cornerSize: CGSize(width: 20, height: 20), style: .continuous).stroke(Color.white, lineWidth: 1).blendMode(.overlay))
-            .mask(RoundedRectangle(cornerSize: CGSize(width: 20, height: 20), style: .continuous))
+            .blurBackground()
         .padding(.top, 20)
             
             Text("Version 1.00")
@@ -69,6 +82,9 @@ struct ContentView: View {
         .padding(.top, 20)
         .padding(.horizontal, 20)
         .padding(.bottom, 20)
+        .sheet(isPresented: $showCertificates) {
+            CertificatesView()
+        }
     }
     
     var divider: some View {
