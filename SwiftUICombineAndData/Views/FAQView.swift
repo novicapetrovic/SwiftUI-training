@@ -38,6 +38,11 @@ struct FAQView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .font(.subheadline)
                 .opacity(0.7)
+            
+            Link(destination: URL(string: "mailto:support@designcode.io")!, label: {
+                PrimaryButton()
+                    .padding(.top, 16)
+            })
         }
         .padding(20)
     }
